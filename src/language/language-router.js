@@ -1,7 +1,6 @@
 const express = require("express");
 const LanguageService = require("./language-service");
 const { requireAuth } = require("../middleware/jwt-auth");
-const { display } = require("../Utils/LinkedList");
 const bodyParser = express.json();
 
 const languageRouter = express.Router();
@@ -100,9 +99,12 @@ languageRouter.post("/guess", bodyParser, async (req, res, next) => {
       });
     }
 
-    wordList = await LanguageService.populateList(req.app.get("db"), headWord);
+    wordList = await LanguageService.populateList(
+      req.app.get("db"),
+      headWord.id
+    );
 
-    wordList.moveHeadTo(newMemoryValue);
+    wordList.moveHead(newMemoryValue);
     await LanguageService.updateWords(req.app.get("db"), wordList, req.user.id);
     const nextWord = wordList.head.value;
     return res.status(200).json({

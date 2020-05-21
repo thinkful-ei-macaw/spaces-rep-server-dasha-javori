@@ -1,3 +1,5 @@
+const { LinkedList } = require("../Utils/LinkedList");
+
 const LanguageService = {
   getUsersLanguage(db, user_id) {
     return db
@@ -60,21 +62,14 @@ const LanguageService = {
   },
   async populateList(db, head) {
     let word;
-    try {
-      word = await this.getWord(db, head);
-    } catch (error) {
-      throw new Error("there was an error getting the word");
-    }
+    word = await this.getWord(db, head);
+
     let list = new LinkedList();
     let id = word.id;
     while (id) {
       id = word.next;
-      list = insertAfter(word);
-      try {
-        word = await this.getWord(db, id);
-      } catch (error) {
-        throw new Error("there was an error getting the word");
-      }
+      list.insertAfter(word);
+      word = await this.getWord(db, id);
     }
     return list;
   },

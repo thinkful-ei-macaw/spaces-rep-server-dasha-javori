@@ -2,6 +2,7 @@ class _Node {
   constructor(value = null, next = null, previous = null) {
     this.value = value;
     this.next = next;
+    this.previous = previous;
   }
 }
 
@@ -107,7 +108,7 @@ class LinkedList {
     }
     previousNode.next = currNode.next;
   }
-  moveHeadTo(m) {
+  moveHead(m) {
     console.log(m);
     let i = 1;
     let oldHead = this.head;
@@ -115,6 +116,7 @@ class LinkedList {
     let temp = this.head;
     while (i < m && temp.next !== null) {
       temp = temp.next;
+
       i++;
     }
     oldHead.next = temp.next;
@@ -288,4 +290,15 @@ function cycle(list) {
   return ret;
 }
 
-module.exports = { LinkedList, display };
+module.exports = {
+  LinkedList,
+  display,
+  cycle,
+  findMiddle,
+  third,
+  reverseDouble,
+  reverse,
+  findLast,
+  findPrevious,
+  isEmpty,
+};
